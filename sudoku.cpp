@@ -96,7 +96,7 @@ bool is_valid_movedummy(char num, pair<int, int> p) {
     bool solver()
     {
         //if(count>81)return false;
-        display_boarddummy();
+       // display_boarddummy();
         for(int i=0;i<9;i++)
         {
             for(int j=0;j<9;j++)
