@@ -194,12 +194,12 @@ bool is_valid_movedummy(char num, pair<int, int> p) {
                     goto h;
                 }
 
-                if (cin.fail()) {
-                    cin.clear();  // Clear the error flag
-                    cin.ignore(numeric_limits<std::streamsize>::max(),
-                               '\n');  // Ignore invalid input
-                    cout << "Invalid input." << endl;
-                }
+               if (cin.fail() || n < -1 || n > 9) {
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Invalid input. Try again." << endl;
+    continue;
+}
 
                 cout << "Enter position = ";
                 cin >> p.first >> p.second;
@@ -251,46 +251,27 @@ bool is_valid_movedummy(char num, pair<int, int> p) {
             for (int j = 0; j < 9; ++j) arr[i][j] = ' ';
         }
     }
-
-    void display_board() {
+void display_board() {
         for (int i = 0; i < 9; ++i) {
-            for (int j = 0; j < 9; ++j) cout << "- - ";
-
-            cout << '-' << endl;
-
-            for (int k = 0; k < 10; ++k) {
-                if (k == 9)
-                    cout << "|";
-                else
-                    cout << "| " << arr[i][k] << ' ';
+            cout << "+---+---+---+---+---+---+---+---+---+\n";
+            for (int j = 0; j < 9; ++j) {
+                cout << "| " << arr[i][j] << " ";
             }
-
-            cout << endl;
+            cout << "|\n";
         }
-
-        for (int i = 0; i < 9; ++i) cout << "- - ";
-
-        cout << '-' << endl;
+        cout << "+---+---+---+---+---+---+---+---+---+\n";
     }
     void display_boarddummy() {
+
         for (int i = 0; i < 9; ++i) {
-            for (int j = 0; j < 9; ++j) cout << "- - ";
-
-            cout << '-' << endl;
-
-            for (int k = 0; k < 10; ++k) {
-                if (k == 9)
-                    cout << "|";
-                else
-                    cout << "| " << dummy[i][k] << ' ';
+            cout << "+---+---+---+---+---+---+---+---+---+\n";
+            for (int j = 0; j < 9; ++j) {
+                cout << "| " << arr[i][j] << " ";
             }
-
-            cout << endl;
+            cout << "|\n";
         }
+        cout << "+---+---+---+---+---+---+---+---+---+\n";
 
-        for (int i = 0; i < 9; ++i) cout << "- - ";
-
-        cout << '-' << endl;
     }
     //-------------------------For generating the board according to the needed
     //difficulty------------------------------------
@@ -345,7 +326,7 @@ bool is_valid_movedummy(char num, pair<int, int> p) {
             //cout<<endl;
         }
         //cout<<"\n\n\n\n\n\n";
-        if(!solver())
+        while(!solver())
         {
              generate_board(difficulty);
         }
@@ -383,6 +364,22 @@ bool is_valid_movedummy(char num, pair<int, int> p) {
         }
         return 1;
     }
+    //--------------instruction display------------------
+
+    void display_instructions() {
+    cout << "\n---------------------- HOW TO PLAY ----------------------\n";
+    cout << "1. You will be asked to enter a number and its position (row and column).\n";
+    cout << "2. To enter a value, type a number between 1 and 9.\n";
+    cout << "3. Then, enter the row and column positions (each between 1 and 9).\n";
+    cout << "   Example: To place 5 at row 3 and column 4, input:\n";
+    cout << "       Enter number = 5\n";
+    cout << "       Enter position = 3 4\n";
+    cout << "4. To undo your last move, enter -1 when prompted for the number.\n";
+    cout << "5. Invalid moves (duplicate or out of bounds) will be rejected.\n";
+    cout << "6. Game ends when you successfully fill all cells correctly.\n";
+    cout << "---------------------------------------------------------\n\n";
+}
+
 };
 
 int main() {
@@ -402,6 +399,7 @@ int main() {
     cin >> i;
 
     g1.generate_board(i);
+    g1.display_instructions();
     g1.play();
 
     // Stop the timer and join the thread
